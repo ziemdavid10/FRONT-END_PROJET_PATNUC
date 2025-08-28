@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Lock, Eye, EyeOff, Mail, Phone, ChevronDown, Building, MapPin } from 'lucide-react';
+import { User, Mail, Phone, Lock, Eye, EyeOff, ChevronDown, Building, MapPin } from 'lucide-react';
 
-const LoginPage = () => {
-  const [isSignup, setIsSignup] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  
-  // Signup form states
+const SignupPage = () => {
   const [formData, setFormData] = useState({
     userType: 'Personne physique',
     companyName: '',
@@ -21,21 +15,13 @@ const LoginPage = () => {
     confirmPassword: ''
   });
   
+  const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isUserTypeDropdownOpen, setIsUserTypeDropdownOpen] = useState(false);
   const [isDomainDropdownOpen, setIsDomainDropdownOpen] = useState(false);
 
   const userTypes = ['Personne physique', 'Personne morale'];
   const activityDomains = ['Domaine 1', 'Domaine 2'];
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isSignup) {
-      console.log('Signup attempt:', formData);
-    } else {
-      console.log('Login attempt:', { email, password });
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -48,6 +34,7 @@ const LoginPage = () => {
     setFormData(prev => ({ 
       ...prev, 
       userType: type,
+      // Reset company fields when switching to physical person
       companyName: type === 'Personne physique' ? '' : prev.companyName,
       activityDomain: type === 'Personne physique' ? 'Domaine 1' : prev.activityDomain,
       location: type === 'Personne physique' ? '' : prev.location
@@ -60,137 +47,70 @@ const LoginPage = () => {
     setIsDomainDropdownOpen(false);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
+
   const isCompanyFieldsEnabled = formData.userType === 'Personne morale';
 
   return (
-    <div className="h-screen flex">
-      {/* Left side - Image and content */}
-      <div 
-        className="flex-1 relative bg-cover bg-center"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`
-        }}
-      >
-        <div className="absolute inset-0 bg-blue-900 bg-opacity-70"></div>
-        
-        {/* Main content */}
-        <div className="relative z-10 flex items-center justify-start h-full px-12 pb-20">
-          <div className="text-white max-w-lg">
-            <h2 className="text-4xl font-bold mb-6 leading-tight">
-              Accédez à vos services administratifs en ligne, suivez vos demandes en temps réel et gagnez du temps.
-            </h2>
-          </div>
-        </div>
-        
-        {/* Navigation dots */}
-        <div className="absolute bottom-12 left-12 flex space-x-3">
-          <div className="w-4 h-4 bg-white rounded-full"></div>
-          <div className="w-4 h-4 bg-white bg-opacity-50 rounded-full"></div>
-          <div className="w-4 h-4 bg-white bg-opacity-50 rounded-full"></div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-white">
+      {/* Header with color bar */}
+      <div className="w-full h-2 bg-gradient-to-r from-green-500 via-red-500 to-yellow-500"></div>
       
-      {/* Right side - Login/Signup form */}
-      <div className="w-full max-w-md bg-white flex flex-col overflow-hidden">
-        {/* Header with logos */}
-        <div className="p-4 border-b border-gray-100">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                <div className="w-5 h-5 bg-red-600 rounded-full"></div>
-              </div>
-              <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center">
-                <div className="w-5 h-5 bg-white rounded"></div>
-              </div>
-              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-                <div className="w-5 h-5 bg-white rounded"></div>
-              </div>
-              <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
-                <div className="w-5 h-5 bg-white rounded"></div>
+      <div className="flex min-h-[calc(100vh-8px)]">
+        {/* Left side - Image (hidden on mobile) */}
+        <div className="hidden lg:flex lg:w-1/2 relative">
+          <img 
+            src="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop"
+            alt="Agricultural field"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-blue-900 bg-opacity-60 flex items-end p-12">
+            <div className="text-white">
+              <h2 className="text-3xl font-bold mb-4">
+                Accédez à vos services administratifs<br />
+                en ligne, suivez vos demandes en<br />
+                temps réel et gagnez du temps.
+              </h2>
+              <div className="flex space-x-2 mt-8">
+                <div className="w-8 h-2 bg-white rounded-full"></div>
+                <div className="w-2 h-2 bg-white bg-opacity-50 rounded-full"></div>
+                <div className="w-2 h-2 bg-white bg-opacity-50 rounded-full"></div>
               </div>
             </div>
-            <h1 className="text-gray-800 text-sm font-semibold">Plateforme de téléprocédures</h1>
           </div>
         </div>
-        
-        {/* Form container */}
-        <div className={`flex-1 p-4 ${isSignup ? 'overflow-y-auto' : 'flex items-center justify-center'}`}>
-          {!isSignup ? (
-            // Login Form
-            <div className="w-full max-w-sm">
-              <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">Connexion</h2>
+
+        {/* Right side - Form */}
+        <div className="w-full lg:w-1/2 flex flex-col">
+          {/* Logo section */}
+          <div className="px-6 py-4 lg:px-12 lg:py-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <User className="w-6 h-6 text-white" />
+                </div>
+                <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
+                  <Building className="w-6 h-6 text-white" />
+                </div>
+                <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center">
+                  <MapPin className="w-6 h-6 text-white" />
+                </div>
+                <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              <h1 className="text-xl font-bold text-gray-800">Plateforme de téléprocédures</h1>
+            </div>
+
+            {/* Form */}
+            <div className="max-w-md mx-auto">
+              <h2 className="text-xl font-bold text-center text-gray-800 mb-6">S'inscrire</h2>
               
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Votre email*"
-                    className="w-full pl-10 pr-4 py-2.5 border-2 border-blue-500 rounded-full focus:outline-none focus:border-blue-600 transition-colors"
-                    required
-                  />
-                </div>
-                
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Entrer votre mot de passe*"
-                    className="w-full pl-10 pr-12 py-2.5 border-2 border-gray-300 rounded-full focus:outline-none focus:border-blue-600 transition-colors"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    ) : (
-                      <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                
-                <div className="text-right">
-                  <Link to="/mot-de-passe-oublie" className="text-blue-600 hover:underline">
-                    Mot de passe oublié ?
-                  </Link>
-                </div>
-                
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-2.5 rounded-full font-semibold hover:bg-blue-700 transition-colors"
-                >
-                  Se connecter
-                </button>
-                
-                <div className="text-center text-sm text-gray-600">
-                  Vous n'avez pas de compte ?{' '}
-                  <button 
-                    type="button"
-                    onClick={() => setIsSignup(true)}
-                    className="text-blue-600 hover:text-blue-700 font-medium"
-                  >
-                    Inscrivez-vous maintenant
-                  </button>
-                </div>
-              </form>
-            </div>
-          ) : (
-            // Signup Form
-            <div className="w-full max-w-sm mx-auto">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">S'inscrire</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-3">
+                {/* User Type Dropdown */}
                 <div className="relative">
                   <div 
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-full bg-gray-50 flex items-center justify-between cursor-pointer"
@@ -218,7 +138,9 @@ const LoginPage = () => {
                   )}
                 </div>
 
+                {/* Company Fields - Only visible for Personne morale */}
                 <div className="space-y-3">
+                  {/* Company Name */}
                   <div className="relative">
                     <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -234,6 +156,7 @@ const LoginPage = () => {
                     />
                   </div>
 
+                  {/* Activity Domain Dropdown */}
                   <div className="relative">
                     <div 
                       className={`w-full px-4 py-2.5 border border-gray-300 rounded-full flex items-center justify-between cursor-pointer ${
@@ -265,6 +188,7 @@ const LoginPage = () => {
                     )}
                   </div>
 
+                  {/* Location */}
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -281,6 +205,7 @@ const LoginPage = () => {
                   </div>
                 </div>
 
+                {/* Full Name */}
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -294,6 +219,7 @@ const LoginPage = () => {
                   />
                 </div>
 
+                {/* Email */}
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -307,6 +233,7 @@ const LoginPage = () => {
                   />
                 </div>
 
+                {/* Phone */}
                 <div className="relative">
                   <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -319,6 +246,7 @@ const LoginPage = () => {
                   />
                 </div>
 
+                {/* Password */}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -339,6 +267,7 @@ const LoginPage = () => {
                   </button>
                 </div>
 
+                {/* Confirm Password */}
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -359,6 +288,7 @@ const LoginPage = () => {
                   </button>
                 </div>
 
+                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full bg-blue-600 text-white py-2.5 rounded-full font-semibold hover:bg-blue-700 transition duration-200"
@@ -366,23 +296,20 @@ const LoginPage = () => {
                   Suivant
                 </button>
 
+                {/* Login Link */}
                 <div className="text-center">
                   <span className="text-gray-600">Vous avez déjà un compte ? </span>
-                  <button 
-                    type="button"
-                    onClick={() => setIsSignup(false)}
-                    className="text-blue-600 hover:text-blue-700 font-medium"
-                  >
+                  <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
                     Connectez-vous
-                  </button>
+                  </Link>
                 </div>
               </form>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default SignupPage;
