@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import LoginPage from './components/LoginPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage';
 import VerifyCodePage from './components/VerifyCodePage';
+import ResetLinkSentPage from './components/ResetLinkSentPage';
 
 function App() {
   return (
@@ -29,7 +30,9 @@ function App() {
           } />
           <Route path="/connexion" element={<LoginPage />} />
           <Route path="/mot-de-passe-oublie" element={<ForgotPasswordPage />} />
+          <Route path="/reset-link-sent" element={<ResetLinkSentPage />} />
           <Route path="/verification-code" element={<VerifyCodePage />} />
+          <Route path="/lien-envoye" element={<ResetLinkSentPage />} />
         </Routes>
       </div>
     </Router>

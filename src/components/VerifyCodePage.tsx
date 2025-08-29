@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { User, Building, MapPin, Mail, Home } from 'lucide-react';
 
 const VerifyCodePage = () => {
   const [code, setCode] = useState(['', '', '', '']);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
   const inputs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 
   const handleChange = (index: number, value: string) => {
@@ -30,8 +32,8 @@ const VerifyCodePage = () => {
       return;
     }
     setError('');
-    // Ici, tu peux ajouter la logique de vérification du code
-    alert('Code vérifié : ' + code.join(''));
+    // Redirection vers la page de confirmation après vérification
+    navigate('/reset-link-sent');
   };
 
   return (
