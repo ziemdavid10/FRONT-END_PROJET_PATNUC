@@ -9,6 +9,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import LoginPage from './components/LoginPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage';
+import VerifyCodePage from './components/VerifyCodePage';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           } />
           <Route path="/connexion" element={<LoginPage />} />
           <Route path="/mot-de-passe-oublie" element={<ForgotPasswordPage />} />
+          <Route path="/verification-code" element={<VerifyCodePage />} />
         </Routes>
       </div>
     </Router>
