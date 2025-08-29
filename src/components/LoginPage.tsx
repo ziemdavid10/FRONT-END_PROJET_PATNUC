@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Lock, Eye, EyeOff, Mail, Phone, ChevronDown, Building, MapPin } from 'lucide-react';
+import { User, Lock, Eye, EyeOff, Mail, Phone, ChevronDown, Building, MapPin, Home } from 'lucide-react';
 
 const LoginPage = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -8,7 +8,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   
-  // Signup form states
+  // États du formulaire d’inscription
   const [formData, setFormData] = useState({
     userType: 'Personne physique',
     companyName: '',
@@ -92,6 +92,9 @@ const LoginPage = () => {
       
       {/* Right side - Login/Signup form */}
       <div className="w-full max-w-md bg-white flex flex-col overflow-hidden">
+        {/* Header with color bar */}
+        <div className="w-full h-2 bg-gradient-to-r from-green-500 via-red-500 to-yellow-500"></div>
+        
         {/* Header with logos */}
         <div className="p-4 border-b border-gray-100">
           <div className="flex items-center justify-between">
@@ -109,7 +112,16 @@ const LoginPage = () => {
                 <div className="w-5 h-5 bg-white rounded"></div>
               </div>
             </div>
-            <h1 className="text-gray-800 text-sm font-semibold">Plateforme de téléprocédures</h1>
+            <div className="flex items-center space-x-3">
+              <h1 className="text-gray-800 text-sm font-semibold">Plateforme de téléprocédures</h1>
+              <Link 
+                to="/" 
+                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors group"
+                title="Retour à l'accueil"
+              >
+                <Home className="w-4 h-4 text-gray-600 group-hover:text-gray-800" />
+              </Link>
+            </div>
           </div>
         </div>
         
