@@ -1,13 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Home } from 'lucide-react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ResetLinkSentPage = () => {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!password || !confirmPassword) {
+      setError('Veuillez remplir les deux champs.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas.');
+      return;
+    }
+    setError('');
+    setSuccess(true);
+    // Ici tu peux ajouter la logique d'appel API pour enregistrer le nouveau mot de passe
+    setTimeout(() => {
+      navigate('/connexion');
+    }, 2000);
+  };
+
   return (
     <div className="h-screen flex">
       {/* Left side - Image and content */}
       <div 
-        className="flex-1 relative bg-cover bg-center"
+        className="hidden md:flex flex-1 relative bg-cover bg-center"
         style={{
           backgroundImage: `url('https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`
         }}
@@ -27,8 +50,8 @@ const ResetLinkSentPage = () => {
         </div>
       </div>
       
-      {/* Right side - Message */}
-      <div className="w-full max-w-md bg-white flex flex-col overflow-hidden">
+      {/* Right side - Form */}
+      <div className="w-full max-w-md bg-white flex flex-col overflow-hidden min-h-screen mx-auto">
         {/* Header with color bar */}
         <div className="w-full h-2 bg-gradient-to-r from-green-500 via-red-500 to-yellow-500"></div>
         
@@ -49,33 +72,38 @@ const ResetLinkSentPage = () => {
                 <div className="w-5 h-5 bg-white rounded"></div>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
-              <h1 className="text-gray-800 text-sm font-semibold">Plateforme de téléprocédures</h1>
-              <Link 
-                to="/" 
-                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors group"
-                title="Retour à l'accueil"
-              >
-                <Home className="w-4 h-4 text-gray-600 group-hover:text-gray-800" />
-              </Link>
-            </div>
+            <h1 className="text-gray-800 text-sm font-semibold">Plateforme de téléprocédures</h1>
           </div>
         </div>
         
-        {/* Message container */}
+        {/* Formulaire de réinitialisation */}
         <div className="flex-1 flex flex-col items-center justify-center p-6">
           <div className="w-full max-w-sm">
-            <h2 className="text-xl font-bold text-center text-gray-800 mb-4">Lien envoyé</h2>
-            <p className="text-gray-600 mb-8 text-center">
-              Un lien de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.<br />
-              Veuillez vérifier votre boîte de réception et suivre les instructions pour réinitialiser votre mot de passe.
-            </p>
-            <Link
-              to="/connexion"
-              className="block w-full bg-blue-600 text-white py-2.5 rounded-full font-semibold text-center hover:bg-blue-700 transition duration-200"
-            >
-              Retour à la connexion
-            </Link>
+            <h2 className="text-xl font-bold text-center text-gray-800 mb-4">Réinitialiser votre mot de passe</h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="password"
+                placeholder="Entrer le nouveau mot de passe"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                className="w-full px-4 py-3 border-2 border-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="password"
+                placeholder="Confirmer le mot de passe"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                className="w-full px-4 py-3 border-2 border-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              {error && <div className="text-red-500 text-center text-sm">{error}</div>}
+              {success && <div className="text-green-600 text-center text-sm">Mot de passe réinitialisé avec succès !</div>}
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2.5 rounded-full font-semibold hover:bg-blue-700 transition duration-200"
+              >
+                Enregistrer le nouveau mot de passe
+              </button>
+            </form>
           </div>
         </div>
       </div>

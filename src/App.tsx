@@ -30,7 +30,7 @@ function App() {
           } />
           <Route path="/connexion" element={<LoginPage />} />
           <Route path="/mot-de-passe-oublie" element={<ForgotPasswordPage />} />
-          <Route path="/reset-link-sent" element={<ResetLinkSentPage />} />
+          <Route path="/reinitialiser-mot-de-passe" element={<ResetLinkSentPage />} />
           <Route path="/verification-code" element={<VerifyCodePage />} />
           <Route path="/lien-envoye" element={<ResetLinkSentPage />} />
         </Routes>

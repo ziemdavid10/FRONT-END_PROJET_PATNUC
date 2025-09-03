@@ -33,7 +33,7 @@ const VerifyCodePage = () => {
     }
     setError('');
     // Redirection vers la page de confirmation après vérification
-    navigate('/reset-link-sent');
+    navigate('/reinitialiser-mot-de-passe');
   };
 
   return (

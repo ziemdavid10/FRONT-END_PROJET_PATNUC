@@ -1,7 +1,13 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const handleMinistereClick = () => {
+    navigate('/connexion');
+  };
   return (
     <div className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 min-h-[600px]">
       {/* Background overlay with image */}
@@ -30,31 +36,27 @@ const HeroSection = () => {
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
                 Accédez à tous vos services administratifs en ligne et suivez vos demandes en temps réel et gagnez du temps.
               </p>
-              <button className="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl">
-                <span>Commencer ma démarche</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
             </div>
             
             {/* Ministry cards */}
             <div className="space-y-4">
-              <div className="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                <div className="flex items-center space-x-4">
+              <div className="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-pointer" onClick={handleMinistereClick}>
+                <div className="flex items-center space-x-4" >
                   <div className="w-16 h-16 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
                     <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
                       <div className="w-6 h-6 bg-green-500 rounded"></div>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 text-lg mb-1">
+                    <div>
+                      <h3 className="font-semibold text-gray-800 text-lg mb-1">
                       Ministère de l'Agriculture et du Développement Rural
                     </h3>
                     <p className="text-sm text-gray-600">Vos démarches en ligne</p>
-                  </div>
+                    </div>
                 </div>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+              <div className="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-pointer" onClick={handleMinistereClick}>
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
                     <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
